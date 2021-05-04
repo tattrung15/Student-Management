@@ -70,7 +70,15 @@ public class UsersManagement extends javax.swing.JFrame {
             new String [] {
                 "STT", "ID", "Họ tên", "Tên người dùng", "Vai trò"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbUser.getTableHeader().setResizingAllowed(false);
         tbUser.getTableHeader().setReorderingAllowed(false);
         tbUser.addMouseListener(new java.awt.event.MouseAdapter() {

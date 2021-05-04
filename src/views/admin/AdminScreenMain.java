@@ -60,6 +60,7 @@ public class AdminScreenMain extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -196,6 +197,15 @@ public class AdminScreenMain extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         jMenu4.setText("Quản lý kỳ học");
+
+        jMenuItem4.setText("Danh sách kỳ học");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
         jMenuBar1.add(jMenu4);
 
         jMenu6.setText("Quản lý lớp học");
@@ -258,12 +268,12 @@ public class AdminScreenMain extends javax.swing.JFrame {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
-        
+
         Calendar calendar = Calendar.getInstance();
         Date currentTime = calendar.getTime();
         lbDate.setText(simpleDateFormat.format(currentTime));
         lbTime.setText(simpleTimeFormat.format(currentTime));
-                
+
         timerNow = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -301,6 +311,13 @@ public class AdminScreenMain extends javax.swing.JFrame {
         CoursesManagement coursesManagement = new CoursesManagement();
         coursesManagement.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        SemestersManagement semesterManagement = new SemestersManagement();
+        semesterManagement.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,6 +368,7 @@ public class AdminScreenMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;

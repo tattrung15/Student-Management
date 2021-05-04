@@ -6,26 +6,31 @@
 package views.admin;
 
 import dao.Course;
+import dao.Semester;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import renderer.ComboBoxRenderer;
+import renderer.ItemComboBox;
 import services.CourseService;
+import services.SemesterService;
 
 /**
  *
  * @author TatTrung
  */
-public class CoursesManagement extends javax.swing.JFrame {
+public class SemestersManagement extends javax.swing.JFrame {
 
     /**
      * Creates new form UsersManagement
      */
-    public CoursesManagement() {
+    public SemestersManagement() {
         initComponents();
     }
 
@@ -40,11 +45,11 @@ public class CoursesManagement extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbCourse = new javax.swing.JTable();
+        tbSemester = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtCourseName = new javax.swing.JTextField();
+        txtSemesterName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
@@ -53,9 +58,11 @@ public class CoursesManagement extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         dcStartTime = new com.toedter.calendar.JDateChooser();
         dcEndTime = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
+        cbCourse = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("QUẢN LÝ KHÓA HỌC");
+        setTitle("QUẢN LÝ KỲ HỌC");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -63,39 +70,39 @@ public class CoursesManagement extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Quản lý khóa học");
+        jLabel1.setText("Quản lý kỳ học");
 
-        tbCourse.setModel(new javax.swing.table.DefaultTableModel(
+        tbSemester.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "STT", "ID", "Tên khóa học", "Ngày bắt đầu", "Ngày kết thúc"
+                "STT", "ID", "Tên kỳ học", "Ngày bắt đầu", "Ngày kết thúc", "Tên khóa học", "CourseId"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tbCourse.getTableHeader().setResizingAllowed(false);
-        tbCourse.getTableHeader().setReorderingAllowed(false);
-        tbCourse.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbSemester.getTableHeader().setResizingAllowed(false);
+        tbSemester.getTableHeader().setReorderingAllowed(false);
+        tbSemester.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbCourseMouseClicked(evt);
+                tbSemesterMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbCourse);
+        jScrollPane1.setViewportView(tbSemester);
 
         jLabel2.setText("ID:");
 
         txtId.setEditable(false);
         txtId.setEnabled(false);
 
-        jLabel3.setText("Tên khóa học:");
+        jLabel3.setText("Tên kỳ học:");
 
         jLabel4.setText("Ngày bắt đầu:");
 
@@ -133,44 +140,46 @@ public class CoursesManagement extends javax.swing.JFrame {
 
         dcEndTime.setDateFormatString("dd-MM-yyyy");
 
+        jLabel5.setText("Khóa học:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(425, 425, 425)
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(txtCourseName, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(dcStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dcEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)))
-                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 46, Short.MAX_VALUE))
+                        .addGap(425, 425, 425)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                    .addComponent(txtSemesterName, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                    .addComponent(dcStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dcEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAdd)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete)))
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(396, 396, 396)
+                        .addComponent(jLabel1)))
+                .addGap(0, 46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +200,7 @@ public class CoursesManagement extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtCourseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSemesterName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dcStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -200,7 +209,11 @@ public class CoursesManagement extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dcEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(43, 43, 43)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cbCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd)
                             .addComponent(btnEdit)
@@ -214,16 +227,36 @@ public class CoursesManagement extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        try {
+            tbSemester.removeColumn(tbSemester.getColumnModel().getColumn(6));
+        } catch (Exception e) {
+
+        }
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        List<Course> courses = courseService.getAllCourses();
+        List<Semester> semesters = semesterService.getAllSemesters();
 
-        DefaultTableModel model = (DefaultTableModel) tbCourse.getModel();
-        for (int i = 0; i < courses.size(); i++) {
-            Course course = courses.get(i);
-            model.addRow(new Object[]{i + 1, course.getCourseId(), course.getCourseName(),
-                simpleDateFormat.format(course.getStartTime()), simpleDateFormat.format(course.getEndTime())});
+        DefaultTableModel model = (DefaultTableModel) tbSemester.getModel();
+        for (int i = 0; i < semesters.size(); i++) {
+            Semester semester = semesters.get(i);
+            model.addRow(new Object[]{i + 1, semester.getSemesterId(), semester.getSemesterName(),
+                simpleDateFormat.format(semester.getStartTime()), simpleDateFormat.format(semester.getEndTime()),
+                semester.getCourse().getCourseName(), semester.getCourse().getCourseId()});
         }
+
+        List<Course> courses = courseService.getAllCourses();
+        Vector vector = new Vector();
+        for (Course course : courses) {
+            vector.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
+        }
+
+        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cbCourse.getModel();
+        for (Course course : courses) {
+            defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
+        }
+
+        cbCourse.setRenderer(new ComboBoxRenderer());
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -233,34 +266,48 @@ public class CoursesManagement extends javax.swing.JFrame {
         adminScreenMain.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void tbCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCourseMouseClicked
+    private void tbSemesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSemesterMouseClicked
         try {
             // TODO add your handling code here:
-            DefaultTableModel tableModel = (DefaultTableModel) tbCourse.getModel();
-            Vector<Object> courseVector = (Vector<Object>) tableModel.getDataVector().elementAt(tbCourse.getSelectedRow());
+            DefaultTableModel tableModel = (DefaultTableModel) tbSemester.getModel();
+            Vector<Object> courseVector = (Vector<Object>) tableModel.getDataVector().elementAt(tbSemester.getSelectedRow());
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
             Course course = new Course();
-            course.setCourseId(Integer.parseInt(courseVector.get(1).toString()));
-            course.setCourseName(courseVector.get(2).toString());
-            course.setStartTime(simpleDateFormat.parse(courseVector.get(3).toString()));
-            course.setEndTime(simpleDateFormat.parse(courseVector.get(4).toString()));
+            course.setCourseId(Integer.parseInt(courseVector.get(6).toString()));
+            course.setCourseName(courseVector.get(5).toString());
 
-            txtId.setText(course.getCourseId().toString());
-            txtCourseName.setText(course.getCourseName());
-            dcStartTime.setDate(course.getStartTime());
-            dcEndTime.setDate(course.getEndTime());
-        } catch (ParseException ex) {
-            Logger.getLogger(CoursesManagement.class.getName()).log(Level.SEVERE, null, ex);
+            Semester semester = new Semester();
+            semester.setCourse(course);
+            semester.setSemesterId(Integer.parseInt(courseVector.get(1).toString()));
+            semester.setSemesterName(courseVector.get(2).toString());
+            semester.setStartTime(simpleDateFormat.parse(courseVector.get(3).toString()));
+            semester.setEndTime(simpleDateFormat.parse(courseVector.get(4).toString()));
+
+            txtId.setText(semester.getSemesterId().toString());
+            txtSemesterName.setText(semester.getSemesterName());
+            dcStartTime.setDate(semester.getStartTime());
+            dcEndTime.setDate(semester.getEndTime());
+
+            DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) cbCourse.getModel();
+            for (int i = 0; i < comboBoxModel.getSize(); i++) {
+                ItemComboBox itemComboBoxSelected = (ItemComboBox) comboBoxModel.getElementAt(i);
+                if (itemComboBoxSelected.getId() == course.getCourseId()) {
+                    comboBoxModel.setSelectedItem(itemComboBoxSelected);
+                }
+            }
+
+        } catch (NumberFormatException | ParseException ex) {
+            Logger.getLogger(SemestersManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_tbCourseMouseClicked
+    }//GEN-LAST:event_tbSemesterMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AddCourseFrame addCourseFrame = new AddCourseFrame();
-        addCourseFrame.setVisible(true);
+        AddSemesterFrame addSemesterFrame = new AddSemesterFrame();
+        addSemesterFrame.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -269,17 +316,7 @@ public class CoursesManagement extends javax.swing.JFrame {
             return;
         }
 
-        int responseConfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xóa không?", "Xóa khóa học", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (responseConfirm == JOptionPane.YES_OPTION) {
-            if (!courseService.deleteCourse(Integer.parseInt(txtId.getText()))) {
-                JOptionPane.showConfirmDialog(null, "Xóa khóa học thất bại", "Xóa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            JOptionPane.showConfirmDialog(null, "Xóa khóa học thành công", "Xóa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            DefaultTableModel model = (DefaultTableModel) tbCourse.getModel();
-            model.setRowCount(0);
-            formWindowOpened(null);
-        }
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -288,8 +325,8 @@ public class CoursesManagement extends javax.swing.JFrame {
             return;
         }
 
-        if (txtCourseName.getText().trim().compareTo("") == 0) {
-            JOptionPane.showConfirmDialog(null, "Tên khóa học không được để trống", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (txtSemesterName.getText().trim().compareTo("") == 0) {
+            JOptionPane.showConfirmDialog(null, "Tên kỳ học không được để trống", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (!dcStartTime.getDate().before(dcEndTime.getDate())) {
@@ -297,21 +334,28 @@ public class CoursesManagement extends javax.swing.JFrame {
             return;
         }
 
-        Course course = new Course();
-        course.setCourseId(Integer.parseInt(txtId.getText()));
-        course.setCourseName(txtCourseName.getText());
-        course.setStartTime(dcStartTime.getDate());
-        course.setEndTime(dcEndTime.getDate());
+        ItemComboBox itemComboBox = (ItemComboBox) cbCourse.getSelectedItem();
 
-        if (!courseService.updateCourse(course)) {
-            JOptionPane.showConfirmDialog(null, "Sửa khóa học thất bại", "Sửa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        Course course = new Course(itemComboBox.getId(), itemComboBox.getContent(), null, null);
+
+        Semester semester = new Semester();
+        semester.setCourse(course);
+        semester.setSemesterId(Integer.parseInt(txtId.getText()));
+        semester.setSemesterName(txtSemesterName.getText());
+        semester.setStartTime(dcStartTime.getDate());
+        semester.setEndTime(dcEndTime.getDate());
+
+        if (!semesterService.updateSemester(semester)) {
+            JOptionPane.showConfirmDialog(null, "Sửa kỳ học thất bại", "Sửa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        JOptionPane.showConfirmDialog(null, "Sửa khóa học thành công", "Sửa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Sửa kỳ học thành công", "Sửa khóa học", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-        DefaultTableModel model = (DefaultTableModel) tbCourse.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbSemester.getModel();
         model.setRowCount(0);
+        cbCourse.removeAllItems();
         formWindowOpened(null);
+
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**
@@ -331,30 +375,38 @@ public class CoursesManagement extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CoursesManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SemestersManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CoursesManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SemestersManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CoursesManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SemestersManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CoursesManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SemestersManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CoursesManagement().setVisible(true);
+                new SemestersManagement().setVisible(true);
             }
         });
     }
 
     private CourseService courseService = new CourseService();
+    private SemesterService semesterService = new SemesterService();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JComboBox<String> cbCourse;
     private com.toedter.calendar.JDateChooser dcEndTime;
     private com.toedter.calendar.JDateChooser dcStartTime;
     private javax.swing.JButton jButton1;
@@ -362,10 +414,11 @@ public class CoursesManagement extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbCourse;
-    private javax.swing.JTextField txtCourseName;
+    private javax.swing.JTable tbSemester;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtSemesterName;
     // End of variables declaration//GEN-END:variables
 }

@@ -181,13 +181,13 @@ public class AddUserFrame extends javax.swing.JFrame {
         }
 
         Account account = new Account(null, txtUsername.getText(), String.valueOf(txtPassword.getPassword()), txtDisplayName.getText(), cbRole.getSelectedItem().toString());
-        if(!accountService.createNewAccount(account)){
+        if (!accountService.createNewAccount(account)) {
             JOptionPane.showConfirmDialog(null, "Thêm tài khoản người dùng thất bại", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         int responseStatus = JOptionPane.showConfirmDialog(null, "Thêm tài khoản người dùng thành công", "Thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-        if(responseStatus == JOptionPane.OK_OPTION){
+        if (responseStatus == JOptionPane.OK_OPTION) {
             this.dispose();
             UsersManagement usersManagement = new UsersManagement();
             usersManagement.setVisible(true);
