@@ -65,6 +65,21 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; ng&#x1b0;&#x1edd;i d&#xf9;ng"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch ng&#x1b0;&#x1edd;i d&#xf9;ng"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
             <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; kh&#xf3;a h&#x1ecd;c"/>
@@ -80,23 +95,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; l&#x1edb;p h&#x1ecd;c"/>
           </Properties>
-          <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; ng&#x1b0;&#x1edd;i d&#xf9;ng"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch ng&#x1b0;&#x1edd;i d&#xf9;ng"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu7">
           <Properties>

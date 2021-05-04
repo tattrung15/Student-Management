@@ -55,11 +55,11 @@ public class AdminScreenMain extends javax.swing.JFrame {
         miSave = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miExit = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -169,15 +169,6 @@ public class AdminScreenMain extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu5.setText("Quản lý khóa học");
-        jMenu5.setToolTipText("");
-        jMenuBar1.add(jMenu5);
-
-        jMenu4.setText("Quản lý kỳ học");
-        jMenuBar1.add(jMenu4);
-
-        jMenu6.setText("Quản lý lớp học");
-
         jMenu3.setText("Quản lý người dùng");
 
         jMenuItem2.setText("Danh sách người dùng");
@@ -188,8 +179,16 @@ public class AdminScreenMain extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
-        jMenu6.add(jMenu3);
+        jMenuBar1.add(jMenu3);
 
+        jMenu5.setText("Quản lý khóa học");
+        jMenu5.setToolTipText("");
+        jMenuBar1.add(jMenu5);
+
+        jMenu4.setText("Quản lý kỳ học");
+        jMenuBar1.add(jMenu4);
+
+        jMenu6.setText("Quản lý lớp học");
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Quản lý học sinh");
