@@ -9,7 +9,6 @@ import dao.Account;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import services.AccountService;
 
