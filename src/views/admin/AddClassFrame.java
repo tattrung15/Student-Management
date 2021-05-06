@@ -5,14 +5,18 @@
  */
 package views.admin;
 
+import dao.Clazz;
 import dao.Course;
 import dao.Semester;
+import java.awt.event.ItemEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import renderer.ComboBoxRenderer;
 import renderer.ItemComboBox;
+import services.ClassService;
 import services.CourseService;
 import services.SemesterService;
 
@@ -20,12 +24,12 @@ import services.SemesterService;
  *
  * @author TatTrung
  */
-public class AddSemesterFrame extends javax.swing.JFrame {
+public class AddClassFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form AddUserFrame
      */
-    public AddSemesterFrame() {
+    public AddClassFrame() {
         initComponents();
     }
 
@@ -40,7 +44,7 @@ public class AddSemesterFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtSemesterName = new javax.swing.JTextField();
+        txtClassName = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
@@ -50,9 +54,11 @@ public class AddSemesterFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cbCourse = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        cbSemester = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("THÊM KỲ HỌC");
+        setTitle("THÊM LỚP HỌC");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -60,7 +66,7 @@ public class AddSemesterFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Thêm kỳ học");
+        jLabel1.setText("Thêm lớp học");
 
         jLabel2.setText("Ngày bắt đầu:");
 
@@ -91,9 +97,17 @@ public class AddSemesterFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Ngày kết thúc:");
 
-        jLabel4.setText("Tên kỳ học:");
+        jLabel4.setText("Tên lớp học:");
 
         jLabel3.setText("Khóa học:");
+
+        cbCourse.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCourseItemStateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("Kỳ học:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,10 +121,12 @@ public class AddSemesterFrame extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSemesterName, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                            .addComponent(cbSemester, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtClassName, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                             .addComponent(dcStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(dcEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -133,7 +149,7 @@ public class AddSemesterFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSemesterName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClassName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -147,7 +163,11 @@ public class AddSemesterFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(jButton2)
@@ -162,24 +182,33 @@ public class AddSemesterFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        SemestersManagement semesterManagement = new SemestersManagement();
-        semesterManagement.setVisible(true);
+        ClassesManagement classesManagement = new ClassesManagement();
+        classesManagement.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-        txtSemesterName.setText("");
+        txtClassName.setText("");
         dcStartTime.setDate(new Date());
         dcEndTime.setDate(new Date());
 
-        cbCourse.removeAllItems();
-        formWindowOpened(null);
+        List<Course> courses = courseService.getAllCourses();
+
+        if (courses.size() != 0) {
+            DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) new JComboBox<ItemComboBox>().getModel();
+            for (Course course : courses) {
+                defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
+            }
+
+            cbCourse.setRenderer(new ComboBoxRenderer());
+        }
+
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        if (txtSemesterName.getText().trim().compareTo("") == 0) {
-            JOptionPane.showConfirmDialog(null, "Tên kỳ học không được để trống", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (txtClassName.getText().trim().compareTo("") == 0) {
+            JOptionPane.showConfirmDialog(null, "Tên lớp học không được để trống", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (!dcStartTime.getDate().before(dcEndTime.getDate())) {
@@ -187,20 +216,30 @@ public class AddSemesterFrame extends javax.swing.JFrame {
             return;
         }
 
-        ItemComboBox itemComboBox = (ItemComboBox) cbCourse.getSelectedItem();
-        Course course = new Course(itemComboBox.getId(), itemComboBox.getContent(), null, null);
-        Semester semester = new Semester(null, txtSemesterName.getText(), dcStartTime.getDate(), dcEndTime.getDate(), course);
+        ItemComboBox itemComboBoxCourse = (ItemComboBox) cbCourse.getSelectedItem();
+        Course course = new Course(itemComboBoxCourse.getId(), itemComboBoxCourse.getContent(), null, null);
 
-        if (!semesterService.createNewSemester(semester)) {
-            JOptionPane.showConfirmDialog(null, "Thêm kỳ học thất bại", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        ItemComboBox itemComboBoxSemester = (ItemComboBox) cbSemester.getSelectedItem();
+
+        if (itemComboBoxSemester.getId() == null) {
+            JOptionPane.showConfirmDialog(null, "Kỳ học không hợp lệ", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int responseStatus = JOptionPane.showConfirmDialog(null, "Thêm kỳ học thành công", "Thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        Semester semester = new Semester(itemComboBoxSemester.getId(), itemComboBoxSemester.getContent(), null, null, course);
+
+        Clazz clazz = new Clazz(null, txtClassName.getText(), dcStartTime.getDate(), dcEndTime.getDate(), semester);
+
+        if (!classService.createNewClass(clazz)) {
+            JOptionPane.showConfirmDialog(null, "Thêm lớp học thất bại", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int responseStatus = JOptionPane.showConfirmDialog(null, "Thêm lớp học thành công", "Thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (responseStatus == JOptionPane.OK_OPTION) {
             this.dispose();
-            SemestersManagement semesterManagement = new SemestersManagement();
-            semesterManagement.setVisible(true);
+            ClassesManagement classesManagement = new ClassesManagement();
+            classesManagement.setVisible(true);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -211,18 +250,47 @@ public class AddSemesterFrame extends javax.swing.JFrame {
 
         List<Course> courses = courseService.getAllCourses();
 
-        if (courses.size() == 0) {
-            return;
+        if (courses.size() != 0) {
+            DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cbCourse.getModel();
+            for (Course course : courses) {
+                defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
+            }
+
+            cbCourse.setRenderer(new ComboBoxRenderer());
         }
 
-        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cbCourse.getModel();
-        for (Course course : courses) {
-            defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
-        }
+        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cbSemester.getModel();
+        defaultComboBoxModel.addElement(new ItemComboBox(null, ""));
 
-        cbCourse.setRenderer(new ComboBoxRenderer());
+        cbSemester.setRenderer(new ComboBoxRenderer());
 
     }//GEN-LAST:event_formWindowOpened
+
+    private void cbCourseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCourseItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            if (((DefaultComboBoxModel) cbCourse.getModel()).getSize() == 0) {
+                return;
+            }
+
+            ItemComboBox itemComboBox = (ItemComboBox) evt.getItem();
+
+            List<Semester> semesters = semesterService.getSemestersByCourseId(itemComboBox.getId());
+
+            if (semesters.size() != 0) {
+                DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) new JComboBox<ItemComboBox>().getModel();
+                for (Semester semester : semesters) {
+                    defaultComboBoxModel.addElement(new ItemComboBox(semester.getSemesterId(), semester.getSemesterName()));
+                }
+                cbSemester.setModel(defaultComboBoxModel);
+            } else {
+                DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) new JComboBox<ItemComboBox>().getModel();
+                defaultComboBoxModel.addElement(new ItemComboBox(null, "Không có"));
+                cbSemester.setModel(defaultComboBoxModel);
+            }
+        }
+    }//GEN-LAST:event_cbCourseItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -241,13 +309,13 @@ public class AddSemesterFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddSemesterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClassFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddSemesterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClassFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddSemesterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClassFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddSemesterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClassFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -255,17 +323,19 @@ public class AddSemesterFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddSemesterFrame().setVisible(true);
+                new AddClassFrame().setVisible(true);
             }
         });
     }
 
+    private ClassService classService = new ClassService();
     private SemesterService semesterService = new SemesterService();
     private CourseService courseService = new CourseService();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnReset;
     private javax.swing.JComboBox<String> cbCourse;
+    private javax.swing.JComboBox<String> cbSemester;
     private com.toedter.calendar.JDateChooser dcEndTime;
     private com.toedter.calendar.JDateChooser dcStartTime;
     private javax.swing.JButton jButton2;
@@ -273,7 +343,8 @@ public class AddSemesterFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txtSemesterName;
+    private javax.swing.JTextField txtClassName;
     // End of variables declaration//GEN-END:variables
 }

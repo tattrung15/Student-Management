@@ -11,7 +11,7 @@ public class TestCSDL {
 
     public static void main(String[] args) throws SQLException, ParseException {
         SemesterService semesterService = new SemesterService();
-        List<Semester> semesters = semesterService.getAllSemesters();
+        List<Semester> semesters = semesterService.getSemestersByCourseId(3);
         for (Semester semester : semesters) {
             System.out.println(semester);
         }

@@ -56,10 +56,43 @@ public class SemesterService {
         return semesters;
     }
 
+    public List<Semester> getSemestersByCourseId(Integer courseId) {
+        List<Semester> semesters = new LinkedList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sqlGetSemestersByCourseId = "SELECT * FROM semesters WHERE CourseId = ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetSemestersByCourseId);
+            preparedStatement.setInt(1, courseId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Semester semester = new Semester();
+                semester.setSemesterId(resultSet.getInt("SemesterId"));
+                semester.setSemesterName(resultSet.getString("SemesterName"));
+                semester.setStartTime(simpleDateFormat.parse(resultSet.getDate("StartTime").toString()));
+                semester.setEndTime(simpleDateFormat.parse(resultSet.getDate("EndTime").toString()));
+
+                semesters.add(semester);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return semesters;
+    }
+
     public Boolean createNewSemester(Semester semester) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        String sqlCreateSemester = "INSERT INTO semesters VALUES(null, ?, ?, ?, ?);";
+        String sqlCreateSemester = "INSERT INTO semesters VALUES(null, ?, ?, ?, ?)";
         try {
 
             Connection connection = CSDL.getConnection();

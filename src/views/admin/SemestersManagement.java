@@ -251,11 +251,6 @@ public class SemestersManagement extends javax.swing.JFrame {
             return;
         }
 
-        Vector vector = new Vector();
-        for (Course course : courses) {
-            vector.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
-        }
-
         DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cbCourse.getModel();
         for (Course course : courses) {
             defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
@@ -398,13 +393,6 @@ public class SemestersManagement extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SemestersManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

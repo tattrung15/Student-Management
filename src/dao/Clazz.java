@@ -2,23 +2,23 @@ package dao;
 
 import java.util.Date;
 
-public class Class {
+public class Clazz {
 
     private Integer classId;
     private String className;
     private Date startTime;
     private Date endTime;
-    private Course course;
+    private Semester semester;
 
-    public Class() {
+    public Clazz() {
     }
 
-    public Class(Integer classId, String className, Date startTime, Date endTime, Course course) {
+    public Clazz(Integer classId, String className, Date startTime, Date endTime, Semester semester) {
         this.classId = classId;
         this.className = className;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.course = course;
+        this.semester = semester;
     }
 
     public Integer getClassId() {
@@ -53,17 +53,17 @@ public class Class {
         this.endTime = endTime;
     }
 
-    public Course getCourse() {
-        return course;
+    public Semester getSemester() {
+        return semester;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     @Override
     public String toString() {
-        return "Class{" + "classId=" + classId + ", className=" + className + ", startTime=" + startTime + ", endTime=" + endTime + ", course=" + course + '}';
+        return "Clazz{" + "classId=" + classId + ", className=" + className + ", startTime=" + startTime + ", endTime=" + endTime + ", semester=" + semester + '}';
     }
 
 }

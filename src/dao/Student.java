@@ -6,12 +6,12 @@ public class Student {
     private String fullName;
     private Integer yearOfBirth;
     private String address;
-    private Class className;
+    private Clazz className;
 
     public Student() {
     }
 
-    public Student(Integer studentId, String fullName, Integer yearOfBirth, String address, Class className) {
+    public Student(Integer studentId, String fullName, Integer yearOfBirth, String address, Clazz className) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
@@ -51,11 +51,11 @@ public class Student {
         this.address = address;
     }
 
-    public Class getClassName() {
+    public Clazz getClassName() {
         return className;
     }
 
-    public void setClassName(Class className) {
+    public void setClassName(Clazz className) {
         this.className = className;
     }
 
