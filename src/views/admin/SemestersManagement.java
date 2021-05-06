@@ -246,6 +246,11 @@ public class SemestersManagement extends javax.swing.JFrame {
         }
 
         List<Course> courses = courseService.getAllCourses();
+
+        if (courses.size() == 0) {
+            return;
+        }
+
         Vector vector = new Vector();
         for (Course course : courses) {
             vector.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
@@ -316,7 +321,17 @@ public class SemestersManagement extends javax.swing.JFrame {
             return;
         }
 
-
+        int responseConfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xóa không?", "Xóa kỳ học", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (responseConfirm == JOptionPane.YES_OPTION) {
+            if (!semesterService.deleteSemester(Integer.parseInt(txtId.getText()))) {
+                JOptionPane.showConfirmDialog(null, "Xóa kỳ học thất bại", "Xóa kỳ học", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showConfirmDialog(null, "Xóa kỳ học thành công", "Xóa kỳ học", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            DefaultTableModel model = (DefaultTableModel) tbSemester.getModel();
+            model.setRowCount(0);
+            formWindowOpened(null);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed

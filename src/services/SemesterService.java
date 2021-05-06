@@ -55,7 +55,7 @@ public class SemesterService {
         }
         return semesters;
     }
-    
+
     public Boolean createNewSemester(Semester semester) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -79,7 +79,7 @@ public class SemesterService {
             return false;
         }
     }
-    
+
     public Boolean updateSemester(Semester semester) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -94,6 +94,26 @@ public class SemesterService {
             preparedStatement.setString(3, simpleDateFormat.format(semester.getEndTime()));
             preparedStatement.setInt(4, semester.getCourse().getCourseId());
             preparedStatement.setInt(5, semester.getSemesterId());
+
+            preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public Boolean deleteSemester(Integer semesterId) {
+        String sqlDeleteSemester = "DELETE FROM semesters WHERE SemesterId = ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlDeleteSemester);
+
+            preparedStatement.setInt(1, semesterId);
 
             preparedStatement.execute();
             preparedStatement.close();

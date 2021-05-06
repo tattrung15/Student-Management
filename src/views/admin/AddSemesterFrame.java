@@ -211,6 +211,11 @@ public class AddSemesterFrame extends javax.swing.JFrame {
         dcEndTime.setDate(new Date());
 
         List<Course> courses = courseService.getAllCourses();
+
+        if (courses.size() == 0) {
+            return;
+        }
+
         Vector model = new Vector();
         for (Course course : courses) {
             model.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));

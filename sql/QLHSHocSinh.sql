@@ -11,14 +11,14 @@ CREATE TABLE QLHSHocSinh.Accounts(
 -- Tạo bảng Courses
 CREATE TABLE QLHSHocSinh.Courses(
 	CourseId INTEGER AUTO_INCREMENT PRIMARY KEY,
-    CourseName VARCHAR(60) UNIQUE,
+    CourseName VARCHAR(60),
     StartTime DATE,
     EndTime DATE
 );
 -- Tạo bảng Semesters
 CREATE TABLE QLHSHocSinh.Semesters(
 	SemesterId INTEGER AUTO_INCREMENT PRIMARY KEY,
-    SemesterName VARCHAR(60) UNIQUE,
+    SemesterName VARCHAR(60),
     StartTime DATE,
     EndTime DATE,
     CourseId INTEGER,
@@ -27,7 +27,7 @@ CREATE TABLE QLHSHocSinh.Semesters(
 -- Tạo bảng Classes
 CREATE TABLE QLHSHocSinh.Classes(
 	ClassId INTEGER AUTO_INCREMENT PRIMARY KEY,
-    ClassName VARCHAR(60) UNIQUE,
+    ClassName VARCHAR(60),
     StartTime DATE,
     EndTime DATE,
     SemesterId INTEGER,
@@ -42,5 +42,3 @@ CREATE TABLE QLHSHocSinh.Students(
     ClassId INTEGER,
     FOREIGN KEY (ClassId) REFERENCES Classes(ClassId)
 );
-
-INSERT INTO QLHSHocSinh.Accounts VALUES(null, 'Username', 'Password', 'DisplayName', 'Role');
