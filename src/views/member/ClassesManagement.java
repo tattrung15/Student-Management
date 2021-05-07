@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.admin;
+package views.member;
 
 import dao.Clazz;
 import dao.Course;
@@ -319,8 +319,8 @@ public class ClassesManagement extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AdminScreenMain adminScreenMain = new AdminScreenMain();
-        adminScreenMain.setVisible(true);
+        MemberScreenMain memberScreenMain = new MemberScreenMain();
+        memberScreenMain.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbClassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClassMouseClicked

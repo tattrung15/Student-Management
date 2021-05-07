@@ -47,6 +47,38 @@ public class CourseService {
         return courses;
     }
 
+    public List<Course> getCoursesLikeCourseName(String courseName) {
+        List<Course> courses = new LinkedList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sqlGetCoursesLikeCourseName = "SELECT CourseId, CourseName, StartTime, EndTime FROM Courses WHERE CourseName LIKE ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetCoursesLikeCourseName);
+            preparedStatement.setString(1, "%" + courseName + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setCourseId(resultSet.getInt("CourseId"));
+                course.setCourseName(resultSet.getString("CourseName"));
+                course.setStartTime(simpleDateFormat.parse(resultSet.getDate("StartTime").toString()));
+                course.setEndTime(simpleDateFormat.parse(resultSet.getDate("EndTime").toString()));
+                courses.add(course);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courses;
+    }
+
     public Boolean createNewCourse(Course course) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

@@ -93,6 +93,34 @@ public class AccountService {
         return accounts;
     }
 
+    public List<Account> getAccountsLikeUsername(String username) {
+        List<Account> accounts = new LinkedList<>();
+
+        String sqlGetAccountsLikeUsername = "SELECT AccountId, Username, DisplayName, Role FROM QLHSHocSinh.Accounts WHERE Username LIKE ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetAccountsLikeUsername);
+            preparedStatement.setString(1, "%" + username + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Account account = new Account();
+                account.setAccountId(resultSet.getInt("AccountId"));
+                account.setUsername(resultSet.getString("Username"));
+                account.setDisplayName(resultSet.getString("DisplayName"));
+                account.setRole(resultSet.getString("Role"));
+                accounts.add(account);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return accounts;
+    }
+
     public Boolean createNewAccount(Account account) {
         String sqlCreateNewUser = "INSERT INTO QLHSHocSinh.Accounts VALUES(null, ?, ?, ?, ?)";
         try {

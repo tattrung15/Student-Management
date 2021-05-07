@@ -6,6 +6,7 @@
 package views.admin;
 
 import dao.Account;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -51,6 +52,8 @@ public class UsersManagement extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("QUẢN LÝ NGƯỜI DÙNG");
@@ -134,6 +137,14 @@ public class UsersManagement extends javax.swing.JFrame {
 
         jLabel6.setText("Mật khẩu:");
 
+        jLabel9.setText("Tìm kiếm theo tên:");
+
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,29 +154,35 @@ public class UsersManagement extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel5))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDisplayName, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addComponent(btnAdd)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnEdit)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnDelete)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
+                        .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDisplayName, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(btnAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -183,11 +200,9 @@ public class UsersManagement extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -211,7 +226,13 @@ public class UsersManagement extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd)
                             .addComponent(btnEdit)
-                            .addComponent(btnDelete))))
+                            .addComponent(btnDelete))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(41, 41, 41)
+                .addComponent(jButton1)
                 .addGap(26, 68, Short.MAX_VALUE))
         );
 
@@ -278,9 +299,9 @@ public class UsersManagement extends javax.swing.JFrame {
                 JOptionPane.showConfirmDialog(null, "Mật khẩu phải có ít nhất 8 ký tự", "Lỗi thêm mới", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        }
 
-        account.setPassword(String.valueOf(txtPassword.getPassword()));
+            account.setPassword(String.valueOf(txtPassword.getPassword()));
+        }
 
         if (!accountService.updateAccount(account)) {
             JOptionPane.showConfirmDialog(null, "Sửa thông tin tài khoản thất bại", "Sửa tài khoản", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -312,6 +333,33 @@ public class UsersManagement extends javax.swing.JFrame {
             formWindowOpened(null);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtSearch.getText().trim().compareTo("") == 0) {
+                DefaultTableModel model = (DefaultTableModel) tbUser.getModel();
+                model.setRowCount(0);
+
+                List<Account> accounts = accountService.getAllAccounts();
+
+                for (int i = 0; i < accounts.size(); i++) {
+                    Account account = accounts.get(i);
+                    model.addRow(new Object[]{i + 1, account.getAccountId(), account.getDisplayName(), account.getUsername(), account.getRole()});
+                }
+            } else {
+                DefaultTableModel model = (DefaultTableModel) tbUser.getModel();
+                model.setRowCount(0);
+
+                List<Account> accounts = accountService.getAccountsLikeUsername(txtSearch.getText());
+
+                for (int i = 0; i < accounts.size(); i++) {
+                    Account account = accounts.get(i);
+                    model.addRow(new Object[]{i + 1, account.getAccountId(), account.getDisplayName(), account.getUsername(), account.getRole()});
+                }
+            }
+        }
+    }//GEN-LAST:event_txtSearchKeyPressed
 
     /**
      * @param args the command line arguments
@@ -361,11 +409,13 @@ public class UsersManagement extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbUser;
     private javax.swing.JTextField txtDisplayName;
     private javax.swing.JTextField txtId;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

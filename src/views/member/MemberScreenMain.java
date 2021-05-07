@@ -5,7 +5,6 @@
  */
 package views.member;
 
-import views.admin.*;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,15 +55,19 @@ public class MemberScreenMain extends javax.swing.JFrame {
         miSave = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miExit = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CHƯƠNG TRÌNH QUẢN LÝ HỒ SƠ SINH VIÊN");
+        setTitle("CHƯƠNG TRÌNH QUẢN LÝ HỒ SƠ HỌC SINH");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -157,8 +160,8 @@ public class MemberScreenMain extends javax.swing.JFrame {
 
         miExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         miExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
-        miExit.setMnemonic('E');
-        miExit.setText("Exit");
+        miExit.setMnemonic('L');
+        miExit.setText("Logout");
         miExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miExitActionPerformed(evt);
@@ -168,17 +171,53 @@ public class MemberScreenMain extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu4.setText("Quản lý kỳ học");
-        jMenuBar1.add(jMenu4);
-
         jMenu5.setText("Quản lý khóa học");
         jMenu5.setToolTipText("");
+
+        jMenuItem3.setText("Danh sách khóa học");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
         jMenuBar1.add(jMenu5);
 
+        jMenu4.setText("Quản lý kỳ học");
+
+        jMenuItem4.setText("Danh sách kỳ học");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu4);
+
         jMenu6.setText("Quản lý lớp học");
+
+        jMenuItem5.setText("Danh sách lớp học");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem5);
+
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Quản lý học sinh");
+
+        jMenuItem6.setText("Danh sách học sinh");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem6);
+
         jMenuBar1.add(jMenu7);
 
         jMenu2.setText("Giới thiệu");
@@ -206,7 +245,7 @@ public class MemberScreenMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 481, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -235,12 +274,12 @@ public class MemberScreenMain extends javax.swing.JFrame {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
-        
+
         Calendar calendar = Calendar.getInstance();
         Date currentTime = calendar.getTime();
         lbDate.setText(simpleDateFormat.format(currentTime));
         lbTime.setText(simpleTimeFormat.format(currentTime));
-                
+
         timerNow = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -264,6 +303,34 @@ public class MemberScreenMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Phiên bản 1.0", "Giới thiệu", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        CoursesManagement coursesManagement = new CoursesManagement();
+        coursesManagement.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        SemestersManagement semesterManagement = new SemestersManagement();
+        semesterManagement.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ClassesManagement classesManagement = new ClassesManagement();
+        classesManagement.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        StudentsManagement studentsManagement = new StudentsManagement();
+        studentsManagement.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,6 +379,10 @@ public class MemberScreenMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;

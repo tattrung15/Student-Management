@@ -56,6 +56,46 @@ public class SemesterService {
         return semesters;
     }
 
+    public List<Semester> getSemestersLikeCourseName(String semesterName) {
+        List<Semester> semesters = new LinkedList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sqlGetSemestersLikeCourseName = "SELECT SemesterId, SemesterName, "
+                + "semesters.StartTime, semesters.EndTime, semesters.CourseId, "
+                + "CourseName FROM semesters, courses WHERE semesters.CourseId = courses.CourseId AND SemesterName LIKE ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetSemestersLikeCourseName);
+            preparedStatement.setString(1, "%" + semesterName + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setCourseId(resultSet.getInt("CourseId"));
+                course.setCourseName(resultSet.getString("CourseName"));
+
+                Semester semester = new Semester();
+                semester.setSemesterId(resultSet.getInt("SemesterId"));
+                semester.setSemesterName(resultSet.getString("SemesterName"));
+                semester.setStartTime(simpleDateFormat.parse(resultSet.getDate("StartTime").toString()));
+                semester.setEndTime(simpleDateFormat.parse(resultSet.getDate("EndTime").toString()));
+                semester.setCourse(course);
+
+                semesters.add(semester);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return semesters;
+    }
+
     public List<Semester> getSemestersByCourseId(Integer courseId) {
         List<Semester> semesters = new LinkedList<>();
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.admin;
+package views.member;
 
 import dao.Course;
 import dao.Semester;
@@ -282,8 +282,8 @@ public class SemestersManagement extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AdminScreenMain adminScreenMain = new AdminScreenMain();
-        adminScreenMain.setVisible(true);
+        MemberScreenMain memberScreenMain = new MemberScreenMain();
+        memberScreenMain.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbSemesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSemesterMouseClicked

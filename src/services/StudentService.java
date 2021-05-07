@@ -62,6 +62,55 @@ public class StudentService {
         }
         return students;
     }
+    
+    public List<Student> getStudentsLikeStudentName(String studentName) {
+        List<Student> students = new LinkedList<>();
+
+        String sqlGetStudentsLikeStudentName = "SELECT StudentId, FullName, YearOfBirth, "
+                + "Address, classes.ClassId, classes.ClassName, semesters.SemesterId, "
+                + "semesters.SemesterName, courses.CourseId, courses.CourseName "
+                + "FROM classes, semesters, courses, students "
+                + "WHERE classes.SemesterId = semesters.SemesterId "
+                + "AND semesters.CourseId = courses.CourseId AND students.ClassId = classes.ClassId AND FullName LIKE ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetStudentsLikeStudentName);
+            preparedStatement.setString(1, "%" + studentName + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setCourseId(resultSet.getInt("CourseId"));
+                course.setCourseName(resultSet.getString("CourseName"));
+
+                Semester semester = new Semester();
+                semester.setSemesterId(resultSet.getInt("SemesterId"));
+                semester.setSemesterName(resultSet.getString("SemesterName"));
+                semester.setCourse(course);
+
+                Clazz clazz = new Clazz();
+                clazz.setClassId(resultSet.getInt("ClassId"));
+                clazz.setClassName(resultSet.getString("ClassName"));
+                clazz.setSemester(semester);
+
+                Student student = new Student();
+                student.setStudentId(resultSet.getInt("StudentId"));
+                student.setFullName(resultSet.getString("FullName"));
+                student.setYearOfBirth(resultSet.getInt("YearOfBirth"));
+                student.setAddress(resultSet.getString("Address"));
+                student.setClassName(clazz);
+
+                students.add(student);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return students;
+    }
 
     public Boolean createNewStudent(Student student) {
         String sqlCreateClass = "INSERT INTO students VALUES(null, ?, ?, ?, ?)";

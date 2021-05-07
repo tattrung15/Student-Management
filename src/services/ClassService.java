@@ -65,6 +65,54 @@ public class ClassService {
         return clazzs;
     }
 
+    public List<Clazz> getClassesLikeClassName(String className) {
+        List<Clazz> clazzs = new LinkedList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sqlGetClassesLikeClassName = "SELECT ClassId, ClassName, classes.StartTime, "
+                + "classes.EndTime, semesters.SemesterId, SemesterName, courses.CourseId, "
+                + "courses.CourseName FROM classes, semesters, courses "
+                + "WHERE classes.SemesterId = semesters.SemesterId AND semesters.CourseId = courses.CourseId AND ClassName LIKE ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetClassesLikeClassName);
+            preparedStatement.setString(1, "%" + className + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setCourseId(resultSet.getInt("CourseId"));
+                course.setCourseName(resultSet.getString("CourseName"));
+
+                Semester semester = new Semester();
+                semester.setSemesterId(resultSet.getInt("SemesterId"));
+                semester.setSemesterName(resultSet.getString("SemesterName"));
+
+                semester.setCourse(course);
+
+                Clazz clazz = new Clazz();
+                clazz.setClassId(resultSet.getInt("ClassId"));
+                clazz.setClassName(resultSet.getString("ClassName"));
+                clazz.setStartTime(simpleDateFormat.parse(resultSet.getDate("StartTime").toString()));
+                clazz.setEndTime(simpleDateFormat.parse(resultSet.getDate("EndTime").toString()));
+
+                clazz.setSemester(semester);
+
+                clazzs.add(clazz);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clazzs;
+    }
+
     public List<Clazz> getClassesBySemesterId(Integer semesterId) {
         List<Clazz> clazzs = new LinkedList<>();
 
