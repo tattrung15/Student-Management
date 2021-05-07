@@ -65,6 +65,39 @@ public class ClassService {
         return clazzs;
     }
 
+    public List<Clazz> getClassesBySemesterId(Integer semesterId) {
+        List<Clazz> clazzs = new LinkedList<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sqlGetClassesBySemesterId = "SELECT * FROM classes WHERE SemesterId = ?";
+        try {
+
+            Connection connection = CSDL.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetClassesBySemesterId);
+            preparedStatement.setInt(1, semesterId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Clazz clazz = new Clazz();
+                clazz.setClassId(resultSet.getInt("ClassId"));
+                clazz.setClassName(resultSet.getString("ClassName"));
+                clazz.setStartTime(simpleDateFormat.parse(resultSet.getDate("StartTime").toString()));
+                clazz.setEndTime(simpleDateFormat.parse(resultSet.getDate("EndTime").toString()));
+
+                clazzs.add(clazz);
+            }
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clazzs;
+    }
+
     public Boolean createNewClass(Clazz clazz) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

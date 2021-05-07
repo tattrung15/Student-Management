@@ -191,18 +191,6 @@ public class AddClassFrame extends javax.swing.JFrame {
         txtClassName.setText("");
         dcStartTime.setDate(new Date());
         dcEndTime.setDate(new Date());
-
-        List<Course> courses = courseService.getAllCourses();
-
-        if (courses.size() != 0) {
-            DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) new JComboBox<ItemComboBox>().getModel();
-            for (Course course : courses) {
-                defaultComboBoxModel.addElement(new ItemComboBox(course.getCourseId(), course.getCourseName()));
-            }
-
-            cbCourse.setRenderer(new ComboBoxRenderer());
-        }
-
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed

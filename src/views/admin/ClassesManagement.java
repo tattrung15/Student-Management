@@ -372,7 +372,9 @@ public class ClassesManagement extends javax.swing.JFrame {
                 JOptionPane.showConfirmDialog(null, "Xóa lớp học thất bại", "Xóa lớp học", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             JOptionPane.showConfirmDialog(null, "Xóa lớp học thành công", "Xóa lớp học", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
             DefaultTableModel model = (DefaultTableModel) tbClass.getModel();
             model.setRowCount(0);
 
@@ -380,10 +382,9 @@ public class ClassesManagement extends javax.swing.JFrame {
 
             List<Clazz> clazzs = classService.getAllClasses();
 
-            DefaultTableModel modelClass = (DefaultTableModel) tbClass.getModel();
             for (int i = 0; i < clazzs.size(); i++) {
                 Clazz currentClazz = clazzs.get(i);
-                modelClass.addRow(new Object[]{i + 1, currentClazz.getClassId(), currentClazz.getClassName(),
+                model.addRow(new Object[]{i + 1, currentClazz.getClassId(), currentClazz.getClassName(),
                     simpleDateFormat.format(currentClazz.getStartTime()), simpleDateFormat.format(currentClazz.getEndTime()),
                     currentClazz.getSemester().getSemesterName(), currentClazz.getSemester().getCourse().getCourseName(),
                     currentClazz.getSemester().getSemesterId(), currentClazz.getSemester().getCourse().getCourseId()});
@@ -439,10 +440,9 @@ public class ClassesManagement extends javax.swing.JFrame {
 
         List<Clazz> clazzs = classService.getAllClasses();
 
-        DefaultTableModel modelClass = (DefaultTableModel) tbClass.getModel();
         for (int i = 0; i < clazzs.size(); i++) {
             Clazz currentClazz = clazzs.get(i);
-            modelClass.addRow(new Object[]{i + 1, currentClazz.getClassId(), currentClazz.getClassName(),
+            model.addRow(new Object[]{i + 1, currentClazz.getClassId(), currentClazz.getClassName(),
                 simpleDateFormat.format(currentClazz.getStartTime()), simpleDateFormat.format(currentClazz.getEndTime()),
                 currentClazz.getSemester().getSemesterName(), currentClazz.getSemester().getCourse().getCourseName(),
                 currentClazz.getSemester().getSemesterId(), currentClazz.getSemester().getCourse().getCourseId()});
