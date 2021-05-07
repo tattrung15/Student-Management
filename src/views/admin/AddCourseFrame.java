@@ -10,10 +10,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import services.CourseService;
 
-/**
- *
- * @author TatTrung
- */
 public class AddCourseFrame extends javax.swing.JFrame {
 
     /**

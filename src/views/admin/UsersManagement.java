@@ -13,10 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.AccountService;
 
-/**
- *
- * @author TatTrung
- */
 public class UsersManagement extends javax.swing.JFrame {
 
     /**

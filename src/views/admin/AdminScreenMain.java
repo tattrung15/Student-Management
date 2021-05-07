@@ -16,10 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import views.SignIn;
 
-/**
- *
- * @author TatTrung
- */
 public class AdminScreenMain extends javax.swing.JFrame {
 
     /**

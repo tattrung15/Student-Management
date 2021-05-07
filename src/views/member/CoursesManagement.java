@@ -17,10 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.CourseService;
 
-/**
- *
- * @author TatTrung
- */
 public class CoursesManagement extends javax.swing.JFrame {
 
     /**

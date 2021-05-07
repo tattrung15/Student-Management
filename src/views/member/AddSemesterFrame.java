@@ -16,10 +16,6 @@ import renderer.ItemComboBox;
 import services.CourseService;
 import services.SemesterService;
 
-/**
- *
- * @author TatTrung
- */
 public class AddSemesterFrame extends javax.swing.JFrame {
 
     /**

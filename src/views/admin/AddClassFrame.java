@@ -20,10 +20,6 @@ import services.ClassService;
 import services.CourseService;
 import services.SemesterService;
 
-/**
- *
- * @author TatTrung
- */
 public class AddClassFrame extends javax.swing.JFrame {
 
     /**

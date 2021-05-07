@@ -26,10 +26,6 @@ import services.ClassService;
 import services.CourseService;
 import services.SemesterService;
 
-/**
- *
- * @author TatTrung
- */
 public class ClassesManagement extends javax.swing.JFrame {
 
     /**

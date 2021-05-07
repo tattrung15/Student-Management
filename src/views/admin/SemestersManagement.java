@@ -22,10 +22,6 @@ import renderer.ItemComboBox;
 import services.CourseService;
 import services.SemesterService;
 
-/**
- *
- * @author TatTrung
- */
 public class SemestersManagement extends javax.swing.JFrame {
 
     /**

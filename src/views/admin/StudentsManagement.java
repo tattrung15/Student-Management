@@ -11,12 +11,8 @@ import dao.Semester;
 import dao.Student;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
@@ -30,10 +26,6 @@ import services.CourseService;
 import services.SemesterService;
 import services.StudentService;
 
-/**
- *
- * @author TatTrung
- */
 public class StudentsManagement extends javax.swing.JFrame {
 
     /**

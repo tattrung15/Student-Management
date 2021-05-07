@@ -9,10 +9,6 @@ import dao.Account;
 import javax.swing.JOptionPane;
 import services.AccountService;
 
-/**
- *
- * @author TatTrung
- */
 public class AddUserFrame extends javax.swing.JFrame {
 
     /**

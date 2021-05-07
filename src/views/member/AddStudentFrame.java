@@ -24,10 +24,6 @@ import services.SemesterService;
 import services.StudentService;
 import views.admin.StudentsManagement;
 
-/**
- *
- * @author TatTrung
- */
 public class AddStudentFrame extends javax.swing.JFrame {
 
     /**

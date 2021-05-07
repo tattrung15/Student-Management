@@ -10,8 +10,6 @@ import dao.Course;
 import dao.Semester;
 import dao.Student;
 import java.awt.event.ItemEvent;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,10 +23,6 @@ import services.CourseService;
 import services.SemesterService;
 import services.StudentService;
 
-/**
- *
- * @author TatTrung
- */
 public class AddStudentFrame extends javax.swing.JFrame {
 
     /**
