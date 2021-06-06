@@ -17,8 +17,9 @@ public class CSDL {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("connect failure!");
+            System.out.println("Connect database failure!");
             System.out.println(ex.getMessage());
+            System.exit(0);
         }
         return conn;
     }
